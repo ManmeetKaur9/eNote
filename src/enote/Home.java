@@ -67,6 +67,9 @@ public class Home extends javax.swing.JFrame {
 
         btn_home.setBackground(new java.awt.Color(85, 65, 118));
         btn_home.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_homeMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_homeMousePressed(evt);
             }
@@ -105,6 +108,9 @@ public class Home extends javax.swing.JFrame {
 
         btn_about.setBackground(new java.awt.Color(54, 33, 89));
         btn_about.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_aboutMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_aboutMousePressed(evt);
             }
@@ -154,6 +160,9 @@ public class Home extends javax.swing.JFrame {
 
         btn_imagetopdf.setBackground(new java.awt.Color(54, 33, 89));
         btn_imagetopdf.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_imagetopdfMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_imagetopdfMousePressed(evt);
             }
@@ -192,6 +201,9 @@ public class Home extends javax.swing.JFrame {
 
         btn_speechtotext.setBackground(new java.awt.Color(64, 43, 100));
         btn_speechtotext.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_speechtotextMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_speechtotextMousePressed(evt);
             }
@@ -230,6 +242,9 @@ public class Home extends javax.swing.JFrame {
 
         btn_texttospeech.setBackground(new java.awt.Color(64, 43, 100));
         btn_texttospeech.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_texttospeechMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_texttospeechMousePressed(evt);
             }
@@ -313,7 +328,6 @@ public class Home extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(91, 47, 3));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/maths-formulas-written-by-white-chalk-on-the-blackboard-background-G2B89G.jpg"))); // NOI18N
-        jLabel5.setMinimumSize(new java.awt.Dimension(1200, 780));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -349,6 +363,8 @@ public class Home extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+
+    
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
         // TODO add your handling code here:
         System.exit(0);
@@ -399,6 +415,52 @@ public class Home extends javax.swing.JFrame {
         resetColor(btn_texttospeech);
     }//GEN-LAST:event_btn_aboutMousePressed
 
+    private void btn_speechtotextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_speechtotextMouseClicked
+        // TODO add your handling code here:
+        new Home().setVisible(false);
+        new Speechtotext().setVisible(true);
+        new TexttoSpeech().setVisible(false);
+        new Imagetopdf().setVisible(false);
+        new About().setVisible(false);
+    }//GEN-LAST:event_btn_speechtotextMouseClicked
+
+    private void btn_texttospeechMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_texttospeechMouseClicked
+        // TODO add your handling code here:
+        new Home().setVisible(false);
+        new Speechtotext().setVisible(false);
+        new Imagetopdf().setVisible(false);
+        new About().setVisible(false);
+        new TexttoSpeech().setVisible(true);
+    }//GEN-LAST:event_btn_texttospeechMouseClicked
+
+    private void btn_imagetopdfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_imagetopdfMouseClicked
+        // TODO add your handling code here:
+        new Home().setVisible(false);
+        new Speechtotext().setVisible(false);
+        new About().setVisible(false);
+        new TexttoSpeech().setVisible(false);
+        new Imagetopdf().setVisible(true);
+    }//GEN-LAST:event_btn_imagetopdfMouseClicked
+
+    private void btn_aboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_aboutMouseClicked
+        // TODO add your handling code here:
+        new Home().setVisible(false);
+        new Speechtotext().setVisible(false);
+        new TexttoSpeech().setVisible(false);
+        new Imagetopdf().setVisible(false);
+        new About().setVisible(true);
+        
+    }//GEN-LAST:event_btn_aboutMouseClicked
+
+    private void btn_homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_homeMouseClicked
+        // TODO add your handling code here:
+        new Home().setVisible(true);
+         new Speechtotext().setVisible(false);
+        new TexttoSpeech().setVisible(false);
+        new Imagetopdf().setVisible(false);
+        new About().setVisible(false);
+    }//GEN-LAST:event_btn_homeMouseClicked
+
     void setColor(JPanel panel)
     {
         panel.setBackground(new Color(85,65,118));
@@ -441,6 +503,11 @@ public class Home extends javax.swing.JFrame {
                 new Home().setVisible(true);
             }
         });
+        
+        Home h= new Home();
+        Speechtotext s= new Speechtotext();
+        
+        h.setVisible(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
