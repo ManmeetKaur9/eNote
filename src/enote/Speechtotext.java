@@ -75,6 +75,9 @@ public class Speechtotext extends javax.swing.JFrame {
 
         btn_home.setBackground(new java.awt.Color(85, 65, 118));
         btn_home.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_homeMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_homeMousePressed(evt);
             }
@@ -113,6 +116,9 @@ public class Speechtotext extends javax.swing.JFrame {
 
         btn_about.setBackground(new java.awt.Color(54, 33, 89));
         btn_about.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_aboutMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_aboutMousePressed(evt);
             }
@@ -162,6 +168,9 @@ public class Speechtotext extends javax.swing.JFrame {
 
         btn_imagetopdf.setBackground(new java.awt.Color(54, 33, 89));
         btn_imagetopdf.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_imagetopdfMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_imagetopdfMousePressed(evt);
             }
@@ -200,6 +209,9 @@ public class Speechtotext extends javax.swing.JFrame {
 
         btn_speechtotext.setBackground(new java.awt.Color(64, 43, 100));
         btn_speechtotext.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_speechtotextMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_speechtotextMousePressed(evt);
             }
@@ -238,6 +250,9 @@ public class Speechtotext extends javax.swing.JFrame {
 
         btn_texttospeech.setBackground(new java.awt.Color(64, 43, 100));
         btn_texttospeech.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_texttospeechMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_texttospeechMousePressed(evt);
             }
@@ -326,7 +341,7 @@ public class Speechtotext extends javax.swing.JFrame {
 
         jTextArea1.setBackground(new java.awt.Color(0, 0, 0));
         jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("KG Second Chances Solid", 0, 13)); // NOI18N
+        jTextArea1.setFont(new java.awt.Font("KG Second Chances Solid", 0, 18)); // NOI18N
         jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
@@ -345,6 +360,11 @@ public class Speechtotext extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Save As");
+        jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel17MouseClicked(evt);
+            }
+        });
 
         jLabel18.setBackground(new java.awt.Color(0, 0, 0));
         jLabel18.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
@@ -498,6 +518,55 @@ public class Speechtotext extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jLabel6MousePressed
+
+    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel17MouseClicked
+
+    private void btn_homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_homeMouseClicked
+        // TODO add your handling code here:
+        new Home().setVisible(true);
+        new Speechtotext().setVisible(false);
+        new TexttoSpeech().setVisible(false);
+        new Imagetopdf().setVisible(false);
+        new About().setVisible(false);
+    }//GEN-LAST:event_btn_homeMouseClicked
+
+    private void btn_speechtotextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_speechtotextMouseClicked
+        // TODO add your handling code here:
+        new Speechtotext().setVisible(true);
+        new TexttoSpeech().setVisible(false);
+        new Imagetopdf().setVisible(false);
+        new About().setVisible(false);
+        new Home().setVisible(false);
+    }//GEN-LAST:event_btn_speechtotextMouseClicked
+
+    private void btn_texttospeechMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_texttospeechMouseClicked
+        // TODO add your handling code here:
+        new TexttoSpeech().setVisible(true);
+        new Speechtotext().setVisible(false);
+        new Imagetopdf().setVisible(false);
+        new About().setVisible(false);
+        new Home().setVisible(false);
+    }//GEN-LAST:event_btn_texttospeechMouseClicked
+
+    private void btn_imagetopdfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_imagetopdfMouseClicked
+        // TODO add your handling code here:
+        new Imagetopdf().setVisible(true);
+        new Speechtotext().setVisible(false);
+        new TexttoSpeech().setVisible(false);
+        new About().setVisible(false);
+        new Home().setVisible(false);
+    }//GEN-LAST:event_btn_imagetopdfMouseClicked
+
+    private void btn_aboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_aboutMouseClicked
+        // TODO add your handling code here:
+        new About().setVisible(true);
+        new Speechtotext().setVisible(false);
+        new Imagetopdf().setVisible(false);
+        new TexttoSpeech().setVisible(false);
+        new Home().setVisible(false);
+    }//GEN-LAST:event_btn_aboutMouseClicked
 
     /**
      * @param args the command line arguments
