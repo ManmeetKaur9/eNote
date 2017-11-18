@@ -5,6 +5,9 @@
  */
 package enote;
 
+import java.awt.Color;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Microsoft
@@ -51,13 +54,11 @@ public class About extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
+        jTextPane1 = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         bg.setBackground(new java.awt.Color(255, 255, 255));
         bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -298,7 +299,7 @@ public class About extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Insert the desired text which you want to listen to....");
+        jLabel7.setText("About eNote...");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -329,59 +330,30 @@ public class About extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 0));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/spheres1_ai_improvisation_by_gleb.gif"))); // NOI18N
-        jLabel5.setMinimumSize(new java.awt.Dimension(200, 400));
-        jLabel5.setPreferredSize(new java.awt.Dimension(200, 442));
+        jScrollPane1.setBackground(new java.awt.Color(0, 0, 0));
+        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
 
-        jTextArea1.setBackground(new java.awt.Color(0, 0, 0));
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("KG Second Chances Solid", 0, 18)); // NOI18N
-        jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        jLabel8.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel8.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Listen");
-
-        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_Voice_50px.png"))); // NOI18N
+        jTextPane1.setBackground(new java.awt.Color(0, 0, 0));
+        jTextPane1.setFont(new java.awt.Font("KG Second Chances Solid", 0, 18)); // NOI18N
+        jTextPane1.setForeground(new java.awt.Color(255, 255, 255));
+        jTextPane1.setText("eNote is a ");
+        jScrollPane1.setViewportView(jTextPane1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(175, 175, 175)
-                        .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 969, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel8)))
-                        .addGap(0, 40, Short.MAX_VALUE))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(272, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -414,13 +386,17 @@ public class About extends javax.swing.JFrame {
             .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        pack();
+        setSize(new java.awt.Dimension(1370, 770));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_homeMouseClicked
         // TODO add your handling code here:
         new TexttoSpeech().setVisible(false);
+        new Speechtotext().setVisible(false);
         new Home().setVisible(true);
+        new Imagetopdf().setVisible(false);
+        new About().setVisible(false);
     }//GEN-LAST:event_btn_homeMouseClicked
 
     private void btn_homeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_homeMousePressed
@@ -435,6 +411,9 @@ public class About extends javax.swing.JFrame {
     private void btn_aboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_aboutMouseClicked
         // TODO add your handling code here:
         new TexttoSpeech().setVisible(false);
+        new Speechtotext().setVisible(false);
+        new Home().setVisible(false);
+        new Imagetopdf().setVisible(false);
         new About().setVisible(true);
     }//GEN-LAST:event_btn_aboutMouseClicked
 
@@ -450,6 +429,9 @@ public class About extends javax.swing.JFrame {
     private void btn_imagetopdfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_imagetopdfMouseClicked
         // TODO add your handling code here:
         new TexttoSpeech().setVisible(false);
+        new Speechtotext().setVisible(false);
+        new Home().setVisible(false);
+        new About().setVisible(false);
         new Imagetopdf().setVisible(true);
     }//GEN-LAST:event_btn_imagetopdfMouseClicked
 
@@ -465,6 +447,9 @@ public class About extends javax.swing.JFrame {
     private void btn_speechtotextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_speechtotextMouseClicked
         // TODO add your handling code here:
         new TexttoSpeech().setVisible(false);
+        new About().setVisible(false);
+        new Home().setVisible(false);
+        new Imagetopdf().setVisible(false);
         new Speechtotext().setVisible(true);
     }//GEN-LAST:event_btn_speechtotextMouseClicked
 
@@ -479,6 +464,10 @@ public class About extends javax.swing.JFrame {
 
     private void btn_texttospeechMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_texttospeechMouseClicked
         // TODO add your handling code here:
+        new About().setVisible(false);
+        new Speechtotext().setVisible(false);
+        new Home().setVisible(false);
+        new Imagetopdf().setVisible(false);
         new TexttoSpeech().setVisible(true);
     }//GEN-LAST:event_btn_texttospeechMouseClicked
 
@@ -491,6 +480,15 @@ public class About extends javax.swing.JFrame {
         resetColor(btn_speechtotext);
     }//GEN-LAST:event_btn_texttospeechMousePressed
 
+    void setColor(JPanel panel)
+    {
+        panel.setBackground(new Color(85,65,118));
+    }
+    void resetColor(JPanel panel)
+    {
+        panel.setBackground(new Color(64,43,100));
+    }
+    
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
         // TODO add your handling code here:
         System.exit(0);
@@ -545,21 +543,18 @@ public class About extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JPanel sidepane;
     // End of variables declaration//GEN-END:variables
 }
