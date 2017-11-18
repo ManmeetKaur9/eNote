@@ -7,16 +7,24 @@ package enote;
 
 import java.awt.Color;
 import javax.swing.JPanel;
+import com.darkprograms.speech.synthesiser.SynthesiserV2;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.advanced.AdvancedPlayer;
+
 
 /**
  *
- * @author Microsoft
+ * @author Manmeet
  */
 public class TexttoSpeech extends javax.swing.JFrame {
 
     /**
      * Creates new form TexttoSpeech
      */
+    
     public TexttoSpeech() {
         initComponents();
     }
@@ -57,7 +65,7 @@ public class TexttoSpeech extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jLabel8 = new javax.swing.JLabel();
+        listen = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -344,10 +352,15 @@ public class TexttoSpeech extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jLabel8.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel8.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Listen");
+        listen.setBackground(new java.awt.Color(0, 0, 0));
+        listen.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
+        listen.setForeground(new java.awt.Color(255, 255, 255));
+        listen.setText("Listen");
+        listen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listenMouseClicked(evt);
+            }
+        });
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_Voice_50px.png"))); // NOI18N
 
@@ -363,7 +376,7 @@ public class TexttoSpeech extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(175, 175, 175)
-                        .addComponent(jLabel8)
+                        .addComponent(listen)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -382,7 +395,7 @@ public class TexttoSpeech extends javax.swing.JFrame {
                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(jLabel8)))
+                                .addComponent(listen)))
                         .addGap(0, 40, Short.MAX_VALUE))
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -434,6 +447,9 @@ public class TexttoSpeech extends javax.swing.JFrame {
     private void btn_aboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_aboutMouseClicked
         // TODO add your handling code here:
         new TexttoSpeech().setVisible(false);
+        new Home().setVisible(false);
+        new Speechtotext().setVisible(false);
+        new Imagetopdf().setVisible(false);
         new About().setVisible(true);
     }//GEN-LAST:event_btn_aboutMouseClicked
 
@@ -449,6 +465,9 @@ public class TexttoSpeech extends javax.swing.JFrame {
     private void btn_imagetopdfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_imagetopdfMouseClicked
         // TODO add your handling code here:
         new TexttoSpeech().setVisible(false);
+        new Home().setVisible(false);
+        new Speechtotext().setVisible(false);
+        new About().setVisible(false);
         new Imagetopdf().setVisible(true);
     }//GEN-LAST:event_btn_imagetopdfMouseClicked
 
@@ -464,6 +483,9 @@ public class TexttoSpeech extends javax.swing.JFrame {
     private void btn_speechtotextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_speechtotextMouseClicked
         // TODO add your handling code here:
         new TexttoSpeech().setVisible(false);
+        new Imagetopdf().setVisible(false);
+        new Home().setVisible(false);
+        new About().setVisible(false);
         new Speechtotext().setVisible(true);
     }//GEN-LAST:event_btn_speechtotextMouseClicked
 
@@ -478,6 +500,10 @@ public class TexttoSpeech extends javax.swing.JFrame {
 
     private void btn_texttospeechMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_texttospeechMouseClicked
         // TODO add your handling code here:
+        new Imagetopdf().setVisible(false);
+        new Home().setVisible(false);
+        new About().setVisible(false);
+        new Speechtotext().setVisible(false);
         new TexttoSpeech().setVisible(true);
     }//GEN-LAST:event_btn_texttospeechMouseClicked
 
@@ -506,10 +532,64 @@ public class TexttoSpeech extends javax.swing.JFrame {
 
     private void btn_homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_homeMouseClicked
         // TODO add your handling code here:
+        new Speechtotext().setVisible(false);
         new TexttoSpeech().setVisible(false);
+        new Imagetopdf().setVisible(false);
+        new About().setVisible(false);
         new Home().setVisible(true);
     }//GEN-LAST:event_btn_homeMouseClicked
 
+    private void listenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listenMouseClicked
+        // TODO add your handling code here:
+        String text=jTextArea1.getText();
+        if(text.equals("")){
+            //Ask user to enter some keywords
+            JOptionPane.showMessageDialog(null,"Please enter some text...");
+        }
+        else
+        {
+            //Convert text to speech   
+            speak(text);
+        }
+    }//GEN-LAST:event_listenMouseClicked
+
+    //Create a Synthesizer instance
+            SynthesiserV2 synthesizer = new SynthesiserV2("AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw");
+            
+    /**
+	 * Calls the MaryTTS to say the given text
+	 * 
+	 * @param text
+	 */
+	public void speak(String text) {
+		System.out.println(text);
+		
+		//Create a new Thread because JLayer is running on the current Thread and will make the application to lag
+		Thread thread = new Thread(() -> {
+			try {
+				
+				//Create a JLayer instance
+				AdvancedPlayer player = new AdvancedPlayer(synthesizer.getMP3Data(text));
+				player.play();
+				
+				System.out.println("Successfully got back synthesizer data");
+				
+			} catch (IOException | JavaLayerException e) {
+				
+				e.printStackTrace(); //Print the exception ( we want to know , not hide below our finger , like many developers do...)
+				
+			}
+		});
+		
+		//We don't want the application to terminate before this Thread terminates
+		thread.setDaemon(false);
+		
+		//Start the Thread
+		thread.start();
+		
+	}
+   
+    
     /**
      * @param args the command line arguments
      */
@@ -521,7 +601,7 @@ public class TexttoSpeech extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -566,7 +646,6 @@ public class TexttoSpeech extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -574,6 +653,7 @@ public class TexttoSpeech extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextArea1;
+    public static javax.swing.JLabel listen;
     private javax.swing.JPanel sidepane;
     // End of variables declaration//GEN-END:variables
 }
