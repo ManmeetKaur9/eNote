@@ -8,11 +8,26 @@ package enote;
 import java.awt.Color;
 import javax.swing.JPanel;
 
+import com.darkprograms.speech.microphone.Microphone;
+import com.darkprograms.speech.recognizer.GSpeechDuplex;
+import com.darkprograms.speech.recognizer.GSpeechResponseListener;
+import com.darkprograms.speech.recognizer.GoogleResponse;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.IOException;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+
+import net.sourceforge.javaflacencoder.FLACFileWriter;
+
 /**
  *
- * @author Microsoft
+ * @author Manmeet
  */
-public class Speechtotext extends javax.swing.JFrame {
+public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseListener, MouseListener{
 
     /**
      * Creates new form Speechtotext
@@ -50,19 +65,16 @@ public class Speechtotext extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        exit = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
+        response = new javax.swing.JTextArea();
+        decrypt = new javax.swing.JLabel();
+        save = new javax.swing.JLabel();
+        encrypt = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -293,20 +305,19 @@ public class Speechtotext extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(98, 63, 158));
 
-        jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_Shutdown_25px.png"))); // NOI18N
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+        exit.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        exit.setForeground(new java.awt.Color(255, 255, 255));
+        exit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_Shutdown_25px.png"))); // NOI18N
+        exit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel6MousePressed(evt);
+                exitMousePressed(evt);
             }
         });
 
         jLabel7.setFont(new java.awt.Font("KG Second Chances Solid", 0, 20)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Convert your speech into text and save it as a file on your Laptop/PC...");
+        jLabel7.setText("Convert your speech into text and save it as a file on your Laptop/PC... ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -314,19 +325,18 @@ public class Speechtotext extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 811, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 905, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(82, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         bg.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 1030, 120));
@@ -339,74 +349,81 @@ public class Speechtotext extends javax.swing.JFrame {
 
         jScrollPane1.setBackground(new java.awt.Color(0, 0, 0));
 
-        jTextArea1.setBackground(new java.awt.Color(0, 0, 0));
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("KG Second Chances Solid", 0, 18)); // NOI18N
-        jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        response.setBackground(new java.awt.Color(0, 0, 0));
+        response.setColumns(20);
+        response.setFont(new java.awt.Font("KG Second Chances Solid", 0, 18)); // NOI18N
+        response.setForeground(new java.awt.Color(255, 255, 255));
+        response.setRows(5);
+        jScrollPane1.setViewportView(response);
 
-        jLabel8.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel8.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Decrypt");
+        decrypt.setBackground(new java.awt.Color(0, 0, 0));
+        decrypt.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
+        decrypt.setForeground(new java.awt.Color(255, 255, 255));
+        decrypt.setText("Decrypt");
 
-        jLabel16.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel16.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Start");
-
-        jLabel17.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel17.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("Save As");
-        jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
+        save.setBackground(new java.awt.Color(0, 0, 0));
+        save.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
+        save.setForeground(new java.awt.Color(255, 255, 255));
+        save.setText("Save As");
+        save.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel17MouseClicked(evt);
+                saveMouseClicked(evt);
             }
         });
 
-        jLabel18.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel18.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Encrypt");
+        encrypt.setBackground(new java.awt.Color(0, 0, 0));
+        encrypt.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
+        encrypt.setForeground(new java.awt.Color(255, 255, 255));
+        encrypt.setText("Encrypt");
 
-        jLabel19.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel19.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setText("Clear");
+        clear.setBackground(new java.awt.Color(0, 0, 0));
+        clear.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
+        clear.setForeground(new java.awt.Color(255, 255, 255));
+        clear.setText("Clear");
+        clear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clearMouseClicked(evt);
+            }
+        });
 
-        jLabel20.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel20.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setText("Pause");
+        pause.setBackground(new java.awt.Color(0, 0, 0));
+        pause.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
+        pause.setForeground(new java.awt.Color(255, 255, 255));
+        pause.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pause.setText("Pause");
+
+        start.setBackground(new java.awt.Color(0, 0, 0));
+        start.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
+        start.setForeground(new java.awt.Color(255, 255, 255));
+        start.setText("Start");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
-                .addComponent(jLabel17)
-                .addGap(136, 136, 136)
-                .addComponent(jLabel18)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel8)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel19)
-                .addGap(39, 39, 39))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(197, 197, 197)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(start)
+                        .addGap(18, 18, 18)
+                        .addComponent(pause)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, Short.MAX_VALUE)
+                        .addComponent(save)
+                        .addGap(159, 159, 159)
+                        .addComponent(encrypt)
+                        .addGap(18, 18, 18)
+                        .addComponent(decrypt)
+                        .addGap(18, 18, 18)
+                        .addComponent(clear)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -415,12 +432,12 @@ public class Speechtotext extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel18)
-                    .addComponent(jLabel19)
-                    .addComponent(jLabel20))
+                    .addComponent(save)
+                    .addComponent(decrypt)
+                    .addComponent(encrypt)
+                    .addComponent(clear)
+                    .addComponent(pause)
+                    .addComponent(start))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -432,8 +449,8 @@ public class Speechtotext extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -514,14 +531,14 @@ public class Speechtotext extends javax.swing.JFrame {
         panel.setBackground(new Color(64,43,100));
     }
     
-    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
+    private void exitMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMousePressed
         // TODO add your handling code here:
         System.exit(0);
-    }//GEN-LAST:event_jLabel6MousePressed
+    }//GEN-LAST:event_exitMousePressed
 
-    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
+    private void saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel17MouseClicked
+    }//GEN-LAST:event_saveMouseClicked
 
     private void btn_homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_homeMouseClicked
         // TODO add your handling code here:
@@ -568,10 +585,17 @@ public class Speechtotext extends javax.swing.JFrame {
         new Home().setVisible(false);
     }//GEN-LAST:event_btn_aboutMouseClicked
 
+    private void clearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearMouseClicked
+        // TODO add your handling code here:
+        response.setText("");
+    }//GEN-LAST:event_clearMouseClicked
+
+		   
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws IOException{
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -579,7 +603,7 @@ public class Speechtotext extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -601,6 +625,92 @@ public class Speechtotext extends javax.swing.JFrame {
                 new Speechtotext().setVisible(true);
             }
         });
+        
+        final Microphone mic = new Microphone(FLACFileWriter.FLAC);
+        //Don't use the below google api key , make your own !!! :) 
+    
+        GSpeechDuplex duplex = new GSpeechDuplex("AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw");
+               
+        duplex.setLanguage("en");
+        
+        pause.setEnabled(false);
+        
+        start.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent evt) {
+		new Thread(() -> {
+                	try {
+                        	duplex.recognize(mic.getTargetDataLine(), mic.getAudioFormat());
+			} catch (Exception ex) {
+                            ex.printStackTrace();
+			}
+		}).start();
+		start.setEnabled(false);
+		pause.setEnabled(true);
+	}
+        @Override
+        public void mousePressed(MouseEvent e) {//To change body of generated methods, choose Tools | Templates.
+        }
+        @Override
+        public void mouseReleased(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+        }
+        @Override
+        public void mouseEntered(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+        }
+        @Override
+        public void mouseExited(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+        }
+        });
+        
+	pause.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent e1) {
+		mic.close();
+		duplex.stopSpeechRecognition();
+		start.setEnabled(true);
+		pause.setEnabled(false);
+            }
+            @Override
+            public void mousePressed(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {//To change body of generated methods, choose Tools | Templates.
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+            }
+            @Override
+            public void mouseExited(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+            }
+	});
+                
+        duplex.addResponseListener(new GSpeechResponseListener() {
+			String old_text = "";
+			
+			public void onResponse(GoogleResponse gr) {
+				String output = "";
+				output = gr.getResponse();
+				if (gr.getResponse() == null) {
+					this.old_text = response.getText();
+					if (this.old_text.contains("(")) {
+						this.old_text = this.old_text.substring(0, this.old_text.indexOf('('));
+					}
+					System.out.println("Paragraph Line Added");
+					this.old_text = ( response.getText() + "\n" );
+					this.old_text = this.old_text.replace(")", "").replace("( ", "");
+					response.setText(this.old_text);
+					return;
+				}
+				if (output.contains("(")) {
+					output = output.substring(0, output.indexOf('('));
+				}
+				if (!gr.getOtherPossibleResponses().isEmpty()) {
+					output = output + " (" + (String) gr.getOtherPossibleResponses().get(0) + ")";
+				}
+				System.out.println(output);
+				response.setText("");
+				response.append(this.old_text);
+				response.append(output);
+			}
+		});
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -610,6 +720,10 @@ public class Speechtotext extends javax.swing.JFrame {
     private javax.swing.JPanel btn_imagetopdf;
     private javax.swing.JPanel btn_speechtotext;
     private javax.swing.JPanel btn_texttospeech;
+    final javax.swing.JLabel clear = new javax.swing.JLabel();
+    private javax.swing.JLabel decrypt;
+    private javax.swing.JLabel encrypt;
+    private javax.swing.JLabel exit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -617,25 +731,46 @@ public class Speechtotext extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea1;
+    static final javax.swing.JLabel pause = new javax.swing.JLabel();
+    public static javax.swing.JTextArea response;
+    private javax.swing.JLabel save;
     private javax.swing.JPanel sidepane;
+    static final javax.swing.JLabel start = new javax.swing.JLabel();
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void onResponse(GoogleResponse gr) {
+         //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+    }
 }
