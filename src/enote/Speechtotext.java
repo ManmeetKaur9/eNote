@@ -40,6 +40,93 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
      */
     public Speechtotext() {
         initComponents();
+         final Microphone mic = new Microphone(FLACFileWriter.FLAC);
+        //Don't use the below google api key , make your own !!! :) 
+    
+        GSpeechDuplex duplex = new GSpeechDuplex("AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw");
+               
+        duplex.setLanguage("en");
+        
+        pause.setEnabled(false);
+        
+        start.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent evt) {
+		new Thread(() -> {
+                	try {
+                        	duplex.recognize(mic.getTargetDataLine(), mic.getAudioFormat());
+			} catch (Exception ex) {
+                            ex.printStackTrace();
+			}
+		}).start();
+		start.setEnabled(false);
+		pause.setEnabled(true);
+	}
+        @Override
+        public void mousePressed(MouseEvent e) {//To change body of generated methods, choose Tools | Templates.
+        }
+        @Override
+        public void mouseReleased(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+        }
+        @Override
+        public void mouseEntered(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+        }
+        @Override
+        public void mouseExited(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+        }
+        });
+        
+	pause.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent e1) {
+		mic.close();
+		duplex.stopSpeechRecognition();
+		start.setEnabled(true);
+		pause.setEnabled(false);
+            }
+            @Override
+            public void mousePressed(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {//To change body of generated methods, choose Tools | Templates.
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+            }
+            @Override
+            public void mouseExited(MouseEvent e) { //To change body of generated methods, choose Tools | Templates.
+            }
+	});
+                
+        duplex.addResponseListener(new GSpeechResponseListener() {
+			String old_text = "";
+			
+			public void onResponse(GoogleResponse gr) {
+				String output = "";
+				output = gr.getResponse();
+				if (gr.getResponse() == null) {
+					this.old_text = response.getText();
+					if (this.old_text.contains("(")) {
+						this.old_text = this.old_text.substring(0, this.old_text.indexOf('('));
+					}
+					System.out.println("Paragraph Line Added");
+					this.old_text = ( response.getText() + "\n" );
+					this.old_text = this.old_text.replace(")", "").replace("( ", "");
+					response.setText(this.old_text);
+					return;
+				}
+				if (output.contains("(")) {
+					output = output.substring(0, output.indexOf('('));
+				}
+				if (!gr.getOtherPossibleResponses().isEmpty()) {
+					output = output + " (" + (String) gr.getOtherPossibleResponses().get(0) + ")";
+				}
+				System.out.println(output);
+				response.setText("");
+				response.append(this.old_text);
+				response.append(output);
+			}
+		});
+        
+        
     }
 
     /**
@@ -882,11 +969,11 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    static final javax.swing.JLabel pause = new javax.swing.JLabel();
+    public static final javax.swing.JLabel pause = new javax.swing.JLabel();
     public static javax.swing.JTextArea response;
     private static final javax.swing.JLabel save = new javax.swing.JLabel();
     private javax.swing.JPanel sidepane;
-    static final javax.swing.JLabel start = new javax.swing.JLabel();
+    public static final javax.swing.JLabel start = new javax.swing.JLabel();
     // End of variables declaration//GEN-END:variables
 
     @Override
