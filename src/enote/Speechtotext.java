@@ -17,9 +17,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import net.sourceforge.javaflacencoder.FLACFileWriter;
 
@@ -73,7 +79,6 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
         jScrollPane1 = new javax.swing.JScrollPane();
         response = new javax.swing.JTextArea();
         decrypt = new javax.swing.JLabel();
-        save = new javax.swing.JLabel();
         encrypt = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -360,6 +365,11 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
         decrypt.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
         decrypt.setForeground(new java.awt.Color(255, 255, 255));
         decrypt.setText("Decrypt");
+        decrypt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                decryptMouseClicked(evt);
+            }
+        });
 
         save.setBackground(new java.awt.Color(0, 0, 0));
         save.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
@@ -375,6 +385,11 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
         encrypt.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
         encrypt.setForeground(new java.awt.Color(255, 255, 255));
         encrypt.setText("Encrypt");
+        encrypt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                encryptMouseClicked(evt);
+            }
+        });
 
         clear.setBackground(new java.awt.Color(0, 0, 0));
         clear.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
@@ -538,6 +553,25 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
 
     private void saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseClicked
         // TODO add your handling code here:
+        if(response.equals(""))
+        {
+            JOptionPane.showMessageDialog(null,"Please speak something...");
+        }
+        else
+        {
+            String text=response.getText();
+            File file=new File("eNote.txt");
+            FileWriter fw;
+            try {
+                fw = new FileWriter(file);
+                fw.write(text);
+                fw.flush();
+                fw.close();
+                JOptionPane.showMessageDialog(null,"Successfully saved to eNote.txt in parent directory.");
+            } catch (IOException ex) {
+                Logger.getLogger(Speechtotext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_saveMouseClicked
 
     private void btn_homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_homeMouseClicked
@@ -588,9 +622,113 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
     private void clearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearMouseClicked
         // TODO add your handling code here:
         response.setText("");
+        encrypt.setEnabled(true);
+        decrypt.setEnabled(true);
+        clear.setEnabled(false);
     }//GEN-LAST:event_clearMouseClicked
 
-		   
+    static char[] chars={
+        'a','b','c','d','e','f','g','h',
+        'i','j','k','l','m','n','o','p',
+        'q','r','s','t','u','v','w','x',
+        'y','z','A','B','C','D','E','F',
+        'G','H','I','J','K','L','M','N',
+        'O','P','Q','R','S','T','U','V',
+        'W','X','Y','Z','0','1','2','3',
+        '4','5','6','7','8','9','~','`',
+        '!','@','#','$','%','^','&','*',
+        '(',')','_','-','+','=','[',']',
+        '{','}',';',':','"','<','>',',',
+        '.','?','/','|','/',' '
+    };
+        
+    
+    private void encryptMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_encryptMouseClicked
+        // TODO add your handling code here:
+        String text=response.getText();
+        int offset=77;
+        if(text.equals(""))
+        {
+            JOptionPane.showMessageDialog(null,"Please speak something...");
+        }
+        else{
+        String encrypted=encrypt_result(text,offset);
+        System.out.println("Result after encryption:"+encrypted);
+        response.setText(encrypted);
+        encrypt.setEnabled(false);
+        decrypt.setEnabled(true);
+        clear.setEnabled(true);
+        }
+    }//GEN-LAST:event_encryptMouseClicked
+
+    public static String encrypt_result(String text, int offset)
+    {
+        char[] plain=text.toCharArray();
+        
+        System.out.println(plain.length);
+        System.out.println(chars.length);
+        
+        for(int i=0;i<plain.length;i++)
+        {
+            for(int j=0;j<chars.length;j++)
+            {
+                if(j<=chars.length-offset)
+                {
+                    if(plain[i]==chars[j])
+                    {
+                        plain[i]=chars[j+offset];
+                        break;
+                    }
+                }
+                    else if(plain[i]==chars[j])
+                    {
+                        plain[i]=chars[j-(chars.length-offset+1)];
+                    }
+                }
+            }
+        return String.valueOf(plain);
+    }
+    
+    private void decryptMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_decryptMouseClicked
+        // TODO add your handling code here:
+        String text=response.getText();
+        int offset=77;
+        if(text.equals(""))
+        {
+            JOptionPane.showMessageDialog(null,"Please speak something...");
+        }
+        else{
+        String decrypted=decrypt_result(text,offset);
+        System.out.println("Result after decryption:"+decrypted);
+        response.setText(decrypted);
+        encrypt.setEnabled(true);
+        decrypt.setEnabled(false);
+        clear.setEnabled(true);
+        }
+    }//GEN-LAST:event_decryptMouseClicked
+
+    public static String decrypt_result(String cip, int offset)
+    {
+        char[] cipher=cip.toCharArray();
+        
+        for(int i=0;i<cipher.length;i++)
+        {
+            for(int j=0;j<chars.length;j++)
+            {
+                if(j>=offset && cipher[i]==chars[j])
+                {
+                    cipher[i]=chars[j-offset];
+                    break;
+                }
+                if(cipher[i]==chars[j]&&j<offset)
+                {
+                    cipher[i]=chars[(chars.length-offset+1)+j];
+                    break;
+                }
+            }
+        }
+        return String.valueOf(cipher);
+    }
     
     /**
      * @param args the command line arguments
@@ -711,6 +849,8 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
 				response.append(output);
 			}
 		});
+        
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -722,7 +862,7 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
     private javax.swing.JPanel btn_texttospeech;
     final javax.swing.JLabel clear = new javax.swing.JLabel();
     private javax.swing.JLabel decrypt;
-    private javax.swing.JLabel encrypt;
+    public javax.swing.JLabel encrypt;
     private javax.swing.JLabel exit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -744,7 +884,7 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
     private javax.swing.JSeparator jSeparator1;
     static final javax.swing.JLabel pause = new javax.swing.JLabel();
     public static javax.swing.JTextArea response;
-    private javax.swing.JLabel save;
+    private static final javax.swing.JLabel save = new javax.swing.JLabel();
     private javax.swing.JPanel sidepane;
     static final javax.swing.JLabel start = new javax.swing.JLabel();
     // End of variables declaration//GEN-END:variables
