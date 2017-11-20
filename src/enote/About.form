@@ -533,10 +533,13 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" min="-2" pref="664" max="-2" attributes="0"/>
-                          <EmptySpace pref="330" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                              <Component id="jScrollPane2" min="-2" pref="990" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -544,8 +547,10 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" pref="578" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" min="-2" pref="201" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -572,11 +577,18 @@
                         </Property>
                         <Property name="lineWrap" type="boolean" value="true"/>
                         <Property name="rows" type="int" value="5"/>
-                        <Property name="text" type="java.lang.String" value="Everyone just reads through books, or in classes after understanding the lectures/ notes given by our teachers. But, what about those who due to some reasons are not able to attend the classes, might be they are not well or were unable to attend the class due to unavoidable circumstances.&#xa;eNote is one solution which converts the lectures into text files and even reads the lectures for you whenever you need them."/>
+                        <Property name="text" type="java.lang.String" value="In today&#x2019;s era, when resources have become so important for us that their even a small amount of disuse can harm us, we are still using a lot of them and have been trying to waste them. Increasing the amount of books and notebooks to be carried to and from the school/colleges is increasing, leaving the students more burdened. Keeping this in mind, I propose a system which can not only save the resources but also help students learn in a very effective and interactive manner. Converting the lectures delivered in the class into text files which will be easily available to the students and even reading the lectures to them when they are in a hurry. This would help out in maintaining an interactive and effective way of study for students who fear studies."/>
                       </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
+                <Component class="javax.swing.JLabel" name="jLabel6">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/images/AAEAAQAAAAAAAAs8AAAAJDM3MDMzZWM2LTVkZWQtNDRjMy1hOTVhLTU0MDFhYzI2ZmUwOQ.png"/>
+                    </Property>
+                  </Properties>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>
