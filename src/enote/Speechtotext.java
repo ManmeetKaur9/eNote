@@ -461,7 +461,7 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
         save.setBackground(new java.awt.Color(0, 0, 0));
         save.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
         save.setForeground(new java.awt.Color(255, 255, 255));
-        save.setText("Save As");
+        save.setText("Save as Text File");
         save.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 saveMouseClicked(evt);
@@ -506,7 +506,7 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(197, 197, 197)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(275, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -517,9 +517,9 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
                         .addComponent(start)
                         .addGap(18, 18, 18)
                         .addComponent(pause)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(save)
-                        .addGap(159, 159, 159)
+                        .addGap(122, 122, 122)
                         .addComponent(encrypt)
                         .addGap(18, 18, 18)
                         .addComponent(decrypt)
@@ -718,7 +718,7 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
         'a','b','c','d','e','f','g','h',
         'i','j','k','l','m','n','o','p',
         'q','r','s','t','u','v','w','x',
-        'y','z','A','B','C','D','E','F',
+        'y','z',' ','A','B','C','D','E',
         'G','H','I','J','K','L','M','N',
         'O','P','Q','R','S','T','U','V',
         'W','X','Y','Z','0','1','2','3',
@@ -726,7 +726,7 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
         '!','@','#','$','%','^','&','*',
         '(',')','_','-','+','=','[',']',
         '{','}',';',':','"','<','>',',',
-        '.','?','/','|','/',' '
+        '.','?','/','|','/','F'
     };
         
     
