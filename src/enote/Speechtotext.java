@@ -451,7 +451,7 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
         decrypt.setBackground(new java.awt.Color(0, 0, 0));
         decrypt.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
         decrypt.setForeground(new java.awt.Color(255, 255, 255));
-        decrypt.setText("Decrypt");
+        decrypt.setText("Encrypt");
         decrypt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 decryptMouseClicked(evt);
@@ -471,7 +471,7 @@ public class Speechtotext extends javax.swing.JFrame implements GSpeechResponseL
         encrypt.setBackground(new java.awt.Color(0, 0, 0));
         encrypt.setFont(new java.awt.Font("KG Second Chances Solid", 0, 24)); // NOI18N
         encrypt.setForeground(new java.awt.Color(255, 255, 255));
-        encrypt.setText("Encrypt");
+        encrypt.setText("Decrypt");
         encrypt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 encryptMouseClicked(evt);
